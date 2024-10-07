@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pasangan_calons', function (Blueprint $table) {
+        Schema::create('kotak_suaras', function (Blueprint $table) {
             $table->id();
-            $table->string('norut');
-            $table->string('pasangan_calon');
-            $table->string('picture');
+            $table->unsignedBigInteger('pasangan_calon_id');
+            $table->unsignedBigInteger('mahasiswa_id')->unique();
             $table->timestamps();
+
+            $table->foreign('pasangan_calon_id')->references('id')->on('pasangan_calons');
+            $table->foreign('mahasiswa_id')->references('id')->on('users');
         });
     }
 
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pasangan_calons');
+        Schema::dropIfExists('kotak_suaras');
     }
 };

@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PasanganCalon>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\KotakSuara>
  */
-class PasanganCalonFactory extends Factory
+class KotakSuaraFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,7 @@ class PasanganCalonFactory extends Factory
     public function definition(): array
     {
         return [
-            'norut' => fake()->unique()->numberBetween(1, 2),
-            'pasangan_calon' => fake()->name(),
-            'picture'=>fake()->word(),
+            //
         ];
     }
 }
