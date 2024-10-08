@@ -16,7 +16,7 @@ class PasanganCalonController extends Controller
 
     }
 
-    public function insert() {
+    public function insert() : View | RedirectResponse {
         //kalau sudah memilih ke laman sudah memilih
         if (KotakSuara::where('mahasiswa_id', Auth::id())->exists()) {
             return redirect(route('kotak-suara.index'));
