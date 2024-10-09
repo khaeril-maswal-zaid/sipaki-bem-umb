@@ -43,29 +43,32 @@ class KotakSuaraController extends Controller
 
     public function live(): View | RedirectResponse
     {
-        $paslon1 = KotakSuara::whereHas('pasanganCalon', function (Builder $query) {
-            // Menggunakan whereIn untuk mencari lebih dari satu nomor urut
-            $query->where('norut', 1); // Misalnya, mencakup calon dengan nomor urut 1 dan 2
-        });
+        $nomorUrut = [1, 2]; // Array nomor urut yang akan diproses
 
-        $paslon2 = KotakSuara::whereHas('pasanganCalon', function (Builder $query) {
-            // Menggunakan whereIn untuk mencari lebih dari satu nomor urut
-            $query->where('norut', 2); // Misalnya, mencakup calon dengan nomor urut 1 dan 2
-        });
+        $namapaslon = [];
+        $norut = [];
+        $count = [];
 
-        $namapaslon = [
-            $paslon1->first()->pasanganCalon->pasangan_calon,
-            $paslon2->first()->pasanganCalon->pasangan_calon,
-        ];
+        foreach ($nomorUrut as $no) {
+            $paslon = KotakSuara::whereHas('pasanganCalon', function (Builder $query) use ($no) {
+                $query->where('norut', $no);
+            })->first();
 
-        $count =  [
-            $paslon1->count(),
-            $paslon2->count()
-        ];
+            if ($paslon && $paslon->pasanganCalon) {
+                $namapaslon[] = $paslon->pasanganCalon->pasangan_calon;
+                $norut[] = $paslon->pasanganCalon->norut;
+                $count[] = KotakSuara::whereHas('pasanganCalon', function (Builder $query) use ($no) {
+                    $query->where('norut', $no);
+                })->count();
+            }
+        }
+
 
         return view('pemilihan.live', [
             'namapaslon' => $namapaslon,
             'count' => $count,
+            'norut' => $norut,
+            'penggunahakpilih' => KotakSuara::count()
         ]);
     }
 }
