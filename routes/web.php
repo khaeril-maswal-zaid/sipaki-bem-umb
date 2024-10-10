@@ -3,13 +3,19 @@
 use App\Http\Controllers\KotakSuaraController;
 use App\Http\Controllers\PasanganCalonController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
 
-Route::get('/live-count', [KotakSuaraController::class, 'live'])->middleware(['auth', 'verified'])->name('kotak-suara.live');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+    Route::get('/live-count', [KotakSuaraController::class, 'live'])->name('kotak-suara.live');
+
+    Route::post('/generatePassword', [UserController::class, 'store'])->name('user.store');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [KotakSuaraController::class, 'index'])->name('kotak-suara.index');
@@ -24,4 +30,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -33,7 +33,7 @@
                     @foreach ($pasangans as $pasangan)
                         <label for="default-radio-{{ $pasangan->norut }}">
                             <div
-                                class="mb-3 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out hover:border-red-500 hover:shadow-lg hover:scale-105  focus-within:border-red-600 focus-within:ring-4 focus-within:ring-red-300">
+                                class="mb-3 max-w-sm hover:bg-gray-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 ease-in-out hover:border-red-500 hover:shadow-lg hover:scale-105 focus-within:border-red-600 focus-within:ring-4 focus-within:ring-red-300">
 
                                 <img class="rounded-t-lg" src="{{ asset('storage/img/' . $pasangan->picture) }}"
                                     alt="" />
