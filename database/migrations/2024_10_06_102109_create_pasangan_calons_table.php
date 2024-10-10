@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('norut');
             $table->string('pasangan_calon');
             $table->string('picture');
+            $table->string('kategori');
             $table->timestamps();
         });
     }

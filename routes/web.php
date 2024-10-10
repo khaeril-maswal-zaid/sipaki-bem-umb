@@ -21,9 +21,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [KotakSuaraController::class, 'index'])->name('kotak-suara.index');
 
     Route::get('/pemilihan-pasangan-calon', [PasanganCalonController::class, 'insert'])->name('pemilihan.insert');
+    Route::get('/pemilihan-calon-himaprodi-peternakan', [PasanganCalonController::class, 'insertPeter'])->name('pemilihan-peter.insert');
+    Route::get('/pemilihan-calon-himaprodi-aktuaria', [PasanganCalonController::class, 'insertAkt'])->name('pemilihan-akt.insert');
     // Route::post('/pemilihan-pasangan-calon', [PasanganCalonController::class, 'store'])->name('pemilihan.store');
 
     Route::post('/kotak-suara', [KotakSuaraController::class, 'store'])->name('kotak-suara.store');
+    Route::post('/kotak-suara-peternakan', [KotakSuaraController::class, 'storePeter'])->name('kotak-suara-peter.store');
+    Route::post('/kotak-suara-aktuaria', [KotakSuaraController::class, 'storeAkt'])->name('kotak-suara-akt.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

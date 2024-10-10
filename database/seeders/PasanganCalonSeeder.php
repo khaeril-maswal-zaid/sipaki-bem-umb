@@ -20,12 +20,38 @@ class PasanganCalonSeeder extends Seeder
                 'norut' => 1,
                 'pasangan_calon' => 'Faldin Buton & Sarly Asri',
                 'picture' => 'faldin-sarly.png',
+                'kategori' => 'bem',
             ],
             [
                 'norut' => 2,
                 'pasangan_calon' => 'Rahmat Ramadhana Noer & Hikma',
                 'picture' => 'rahmat-hikmah.png',
-            ]
+                'kategori' => 'bem',
+            ],
+            [
+                'norut' => 1,
+                'pasangan_calon' => 'Eril kurniawan',
+                'picture' => 'eril.png',
+                'kategori' => 'peter',
+            ],
+            [
+                'norut' => 2,
+                'pasangan_calon' => 'Kotak Kosong',
+                'picture' => 'kotak-kosong.png',
+                'kategori' => 'peter',
+            ],
+            [
+                'norut' => 1,
+                'pasangan_calon' => 'M. Rezki',
+                'picture' => 'rezki.png',
+                'kategori' => 'akt',
+            ],
+            [
+                'norut' => 1,
+                'pasangan_calon' => 'Riswandi',
+                'picture' => 'riswan.png',
+                'kategori' => 'akt',
+            ],
         ];
 
         foreach ($data as $key => $value) {
