@@ -6,13 +6,14 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'verified'])->group(function () {
+// Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('/live-count', [KotakSuaraController::class, 'live'])->name('kotak-suara.live');
+    Route::get('/live-count', [PasanganCalonController::class, 'live'])->name('kotak-suara.live');
 
     Route::post('/generatePassword', [UserController::class, 'store'])->name('user.store');
 });

@@ -47,7 +47,7 @@ class PasanganCalonSeeder extends Seeder
                 'kategori' => 'akt',
             ],
             [
-                'norut' => 1,
+                'norut' => 2,
                 'pasangan_calon' => 'Riswandi',
                 'picture' => 'riswan.png',
                 'kategori' => 'akt',

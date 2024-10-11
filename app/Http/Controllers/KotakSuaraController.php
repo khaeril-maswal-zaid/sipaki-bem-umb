@@ -91,7 +91,7 @@ class KotakSuaraController extends Controller
         return redirect(route('kotak-suara.index'));
     }
 
-    public function live(): View | RedirectResponse
+    public function liveXXX(): View | RedirectResponse
     {
         $nomorUrut = [1, 2]; // Array nomor urut yang akan diproses
 

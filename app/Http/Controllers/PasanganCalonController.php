@@ -6,10 +6,13 @@ use App\Models\KotakSuara;
 use App\Models\KotakSuaraAktuaria;
 use App\Models\KotakSuaraPeternakan;
 use App\Models\PasanganCalon;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
+
 
 
 class PasanganCalonController extends Controller
@@ -57,6 +60,71 @@ class PasanganCalonController extends Controller
         PasanganCalon::create([]);
 
         return redirect(route(''));
+    }
+
+
+    public function live(): View | RedirectResponse
+    {
+        $paslon = [];
+        $countpaslon = [];
+
+        for ($i = 1; $i < PasanganCalon::where('kategori', 'bem')->count() + 1; $i++) {
+
+            $paslon[] = PasanganCalon::where('norut', $i)->where('kategori', 'bem')->first();
+
+            $countpaslon[] = KotakSuara::whereHas('pasanganCalon', function (Builder $query) use ($i) {
+                $query->where('norut', $i)->where('kategori', 'bem');
+            })->count();
+        }
+
+        //--------------------------------------------------------------------------------------------
+        $calonpeter = [];
+        $countpeter = [];
+
+        for ($i = 1; $i < PasanganCalon::where('kategori', 'peter')->count() + 1; $i++) {
+
+            $calonpeter[] = PasanganCalon::where('norut', $i)->where('kategori', 'peter')->first();
+
+            $countpeter[] = KotakSuaraPeternakan::whereHas('pasanganCalon', function (Builder $query) use ($i) {
+                $query->where('norut', $i)->where('kategori', 'peter');
+            })->count();
+        }
+
+        //--------------------------------------------------------------------------------------------
+        $calonakt = [];
+        $countakt = [];
+
+        for ($i = 1; $i < PasanganCalon::where('kategori', 'akt')->count() + 1; $i++) {
+
+            $calonakt[] = PasanganCalon::where('norut', $i)->where('kategori', 'akt')->first();
+
+            $countakt[] = KotakSuaraAktuaria::whereHas('pasanganCalon', function (Builder $query) use ($i) {
+                $query->where('norut', $i)->where('kategori', 'peter');
+            })->count();
+        }
+
+        return view('pemilihan.live', [
+            'datas' => [
+                [
+                    'namapaslon' => $paslon,
+                    'count' => $countpaslon,
+                    'penggunahakpilih' => KotakSuara::count(),
+                    'jumlahdpt' => User::whereNot('nim', '739165')->count()
+                ],
+                [
+                    'namapaslon' => $calonpeter,
+                    'count' => $countpeter,
+                    'penggunahakpilih' => KotakSuaraPeternakan::count(),
+                    'jumlahdpt' => User::whereNot('nim', '739165')->where('prodi', 'peter')->count()
+                ],
+                [
+                    'namapaslon' => $calonakt,
+                    'count' => $countakt,
+                    'penggunahakpilih' => KotakSuaraAktuaria::count(),
+                    'jumlahdpt' => User::whereNot('nim', '739165')->where('prodi', 'akt')->count()
+                ]
+            ]
+        ]);
     }
 
     /**

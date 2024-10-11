@@ -17,51 +17,59 @@ import Highcharts from "highcharts";
 import Exporting from "highcharts/modules/exporting";
 Exporting(Highcharts);
 
-Highcharts.chart("container", {
-    chart: {
-        type: "pie",
-    },
-    title: {
-        text: "&nbsp",
-    },
-    tooltip: {
-        valueSuffix: "%",
-    },
-    subtitle: {
-        // text: "Universitas Muhammadiyah Bulukumba tahun 2024",
-    },
-    plotOptions: {
-        series: {
-            allowPointSelect: true,
-            cursor: "pointer",
-            dataLabels: [
-                {
-                    enabled: true,
-                    distance: 20,
-                },
-                {
-                    enabled: true,
-                    distance: -40,
-                    format: "{point.percentage:.1f}%",
-                    style: {
-                        fontSize: "1.2em",
-                        textOutline: "none",
-                        opacity: 0.7,
-                    },
-                    filter: {
-                        operator: ">",
-                        property: "percentage",
-                        value: 10,
-                    },
-                },
-            ],
+// Fungsi untuk membuat chart Highcharts dengan parameter containerId dan dataSeries
+function createPieChart(containerId, dataSeries) {
+    Highcharts.chart(containerId, {
+        chart: {
+            type: "pie",
         },
-    },
-    series: [
-        {
-            name: "Percentage",
-            colorByPoint: true,
-            data: window.dataSeries,
+        title: {
+            text: "&nbsp",
         },
-    ],
-});
+        tooltip: {
+            valueSuffix: "%",
+        },
+        subtitle: {
+            // text: "Universitas Muhammadiyah Bulukumba tahun 2024",
+        },
+        plotOptions: {
+            series: {
+                allowPointSelect: true,
+                cursor: "pointer",
+                dataLabels: [
+                    {
+                        enabled: true,
+                        distance: 20,
+                    },
+                    {
+                        enabled: true,
+                        distance: -40,
+                        format: "{point.percentage:.1f}%",
+                        style: {
+                            fontSize: "1.2em",
+                            textOutline: "none",
+                            opacity: 0.7,
+                        },
+                        filter: {
+                            operator: ">",
+                            property: "percentage",
+                            value: 10,
+                        },
+                    },
+                ],
+            },
+        },
+        series: [
+            {
+                name: "Percentage",
+                colorByPoint: true,
+                data: dataSeries,
+            },
+        ],
+    });
+}
+
+// Panggil fungsi untuk setiap chart dengan parameter berbeda
+createPieChart("container0", window.dataSeries0);
+createPieChart("container1", window.dataSeries1);
+createPieChart("container2", window.dataSeries2);
