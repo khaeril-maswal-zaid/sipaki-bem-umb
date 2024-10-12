@@ -63,7 +63,7 @@ class PasanganCalonController extends Controller
     }
 
 
-    public function live(): View | RedirectResponse
+    public function live()
     {
         $paslon = [];
         $countpaslon = [];
@@ -99,30 +99,28 @@ class PasanganCalonController extends Controller
             $calonakt[] = PasanganCalon::where('norut', $i)->where('kategori', 'akt')->first();
 
             $countakt[] = KotakSuaraAktuaria::whereHas('pasanganCalon', function (Builder $query) use ($i) {
-                $query->where('norut', $i)->where('kategori', 'peter');
+                $query->where('norut', $i)->where('kategori', 'akt');
             })->count();
         }
 
-        return view('pemilihan.live', [
-            'datas' => [
-                [
-                    'namapaslon' => $paslon,
-                    'count' => $countpaslon,
-                    'penggunahakpilih' => KotakSuara::count(),
-                    'jumlahdpt' => User::whereNot('nim', '739165')->count()
-                ],
-                [
-                    'namapaslon' => $calonpeter,
-                    'count' => $countpeter,
-                    'penggunahakpilih' => KotakSuaraPeternakan::count(),
-                    'jumlahdpt' => User::whereNot('nim', '739165')->where('prodi', 'peter')->count()
-                ],
-                [
-                    'namapaslon' => $calonakt,
-                    'count' => $countakt,
-                    'penggunahakpilih' => KotakSuaraAktuaria::count(),
-                    'jumlahdpt' => User::whereNot('nim', '739165')->where('prodi', 'akt')->count()
-                ]
+        return response()->json([
+            "bem" => [
+                'namapaslon' => $paslon,
+                'count' => $countpaslon,
+                'penggunahakpilih' => KotakSuara::count(),
+                'jumlahdpt' => User::whereNot('nim', '739165')->count()
+            ],
+            "peter" => [
+                'namapaslon' => $calonpeter,
+                'count' => $countpeter,
+                'penggunahakpilih' => KotakSuaraPeternakan::count(),
+                'jumlahdpt' => User::whereNot('nim', '739165')->where('prodi', 'peter')->count()
+            ],
+            "akt" => [
+                'namapaslon' => $calonakt,
+                'count' => $countakt,
+                'penggunahakpilih' => KotakSuaraAktuaria::count(),
+                'jumlahdpt' => User::whereNot('nim', '739165')->where('prodi', 'akt')->count()
             ]
         ]);
     }

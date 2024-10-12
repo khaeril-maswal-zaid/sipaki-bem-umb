@@ -17,59 +17,99 @@ import Highcharts from "highcharts";
 import Exporting from "highcharts/modules/exporting";
 Exporting(Highcharts);
 
-// Fungsi untuk membuat chart Highcharts dengan parameter containerId dan dataSeries
-function createPieChart(containerId, dataSeries) {
-    Highcharts.chart(containerId, {
-        chart: {
-            type: "pie",
-        },
-        title: {
-            text: "&nbsp",
-        },
-        tooltip: {
-            valueSuffix: "%",
-        },
-        subtitle: {
-            // text: "Universitas Muhammadiyah Bulukumba tahun 2024",
-        },
-        plotOptions: {
-            series: {
-                allowPointSelect: true,
-                cursor: "pointer",
-                dataLabels: [
+document.addEventListener("DOMContentLoaded", function () {
+    // Fungsi untuk mengambil data dari route lain dan memperbarui chart
+    function fetchDataAndUpdateChart(chart, dataKey) {
+        fetch("/live-count-api") // Gantilah ini dengan route yang tepat
+            .then((response) => response.json())
+            .then((data) => {
+                let datas = [
                     {
-                        enabled: true,
-                        distance: 20,
+                        name: data[dataKey].namapaslon[0].pasangan_calon,
+                        y: data[dataKey].count[0],
                     },
                     {
-                        enabled: true,
-                        distance: -40,
-                        format: "{point.percentage:.1f}%",
-                        style: {
-                            fontSize: "1.2em",
-                            textOutline: "none",
-                            opacity: 0.7,
-                        },
-                        filter: {
-                            operator: ">",
-                            property: "percentage",
-                            value: 10,
-                        },
+                        name: data[dataKey].namapaslon[1].pasangan_calon,
+                        y: data[dataKey].count[1],
                     },
-                ],
-            },
-        },
-        series: [
-            {
-                name: "Percentage",
-                colorByPoint: true,
-                data: dataSeries,
-            },
-        ],
-    });
-}
+                ];
+                chart.series[0].setData(datas);
+            })
+            .catch((error) => console.error("Error fetching data:", error));
+    }
 
-// Panggil fungsi untuk setiap chart dengan parameter berbeda
-createPieChart("container0", window.dataSeries0);
-createPieChart("container1", window.dataSeries1);
-createPieChart("container2", window.dataSeries2);
+    // Fungsi untuk inisialisasi chart
+    function createChart(containerId, titleText) {
+        return Highcharts.chart(containerId, {
+            chart: {
+                type: "pie",
+            },
+            title: {
+                text: titleText,
+            },
+            tooltip: {
+                valueSuffix: " Suara",
+            },
+            subtitle: {
+                text: "Universitas Muhammdiyah Bulukumba",
+            },
+            plotOptions: {
+                series: {
+                    allowPointSelect: true,
+                    cursor: "pointer",
+                    dataLabels: [
+                        {
+                            enabled: true,
+                            distance: 20,
+                        },
+                        {
+                            enabled: true,
+                            distance: -40,
+                            format: "{point.percentage:.1f}%",
+                            style: {
+                                fontSize: "1.2em",
+                                textOutline: "none",
+                                opacity: 0.7,
+                            },
+                            filter: {
+                                operator: ">",
+                                property: "percentage",
+                                value: 10,
+                            },
+                        },
+                    ],
+                },
+            },
+            series: [
+                {
+                    name: "Prolehan",
+                    colorByPoint: true,
+                    data: [], // Data awal kosong, akan diisi dari server
+                },
+            ],
+        });
+    }
+
+    // Buat chart untuk setiap kategori
+    const chart1 = createChart(
+        "container",
+        "Hasil Pemilihan Presiden dan Wakil Presiden Mahasiswa"
+    );
+    const chart2 = createChart(
+        "container2",
+        "Hasil Pemilihan Ketua HIMAPRODI Peternakan"
+    );
+    const chart3 = createChart(
+        "container3",
+        "Hasil Pemilihan Ketua HIMAPRODI Aktuaria"
+    );
+
+    // Panggil fetch data dan update chart secara berkala
+    fetchDataAndUpdateChart(chart1, "bem");
+    fetchDataAndUpdateChart(chart2, "peter");
+    fetchDataAndUpdateChart(chart3, "akt");
+
+    setInterval(() => fetchDataAndUpdateChart(chart1, "bem"), 2000); // Ambil data tiap 2 detik
+    setInterval(() => fetchDataAndUpdateChart(chart2, "peter"), 2000); // Ambil data tiap 2 detik
+    setInterval(() => fetchDataAndUpdateChart(chart3, "akt"), 2000); // Ambil data tiap 2 detik
+});

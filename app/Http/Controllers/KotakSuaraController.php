@@ -91,34 +91,8 @@ class KotakSuaraController extends Controller
         return redirect(route('kotak-suara.index'));
     }
 
-    public function liveXXX(): View | RedirectResponse
+    public function liveView(): View | RedirectResponse
     {
-        $nomorUrut = [1, 2]; // Array nomor urut yang akan diproses
-
-        $namapaslon = [];
-        $norut = [];
-        $count = [];
-
-        foreach ($nomorUrut as $no) {
-            $paslon = KotakSuara::whereHas('pasanganCalon', function (Builder $query) use ($no) {
-                $query->where('norut', $no);
-            })->first();
-
-            if ($paslon && $paslon->pasanganCalon) {
-                $namapaslon[] = $paslon->pasanganCalon->pasangan_calon;
-                $norut[] = $paslon->pasanganCalon->norut;
-                $count[] = KotakSuara::whereHas('pasanganCalon', function (Builder $query) use ($no) {
-                    $query->where('norut', $no);
-                })->count();
-            }
-        }
-
-
-        return view('pemilihan.live', [
-            'namapaslon' => $namapaslon,
-            'count' => $count,
-            'norut' => $norut,
-            'penggunahakpilih' => KotakSuara::count()
-        ]);
+        return view('pemilihan.live');
     }
 }

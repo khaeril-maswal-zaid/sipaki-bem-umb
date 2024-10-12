@@ -9,11 +9,10 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware('auth')->group(function () {
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
 
-    Route::get('/live-count', [PasanganCalonController::class, 'live'])->name('kotak-suara.live');
+    Route::get('/live-count', [KotakSuaraController::class, 'liveView'])->name('kotak-suara.live');
+    Route::get('/live-count-api', [PasanganCalonController::class, 'live'])->name('kotak-suara.liveapi');
 
     Route::post('/generatePassword', [UserController::class, 'store'])->name('user.store');
 });
