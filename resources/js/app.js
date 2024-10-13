@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchDataAndUpdateChart(chart2, "peter");
     fetchDataAndUpdateChart(chart3, "akt");
 
-    setInterval(() => fetchDataAndUpdateChart(chart1, "bem"), 2000); // Ambil data tiap 2 detik
-    setInterval(() => fetchDataAndUpdateChart(chart2, "peter"), 2000); // Ambil data tiap 2 detik
-    setInterval(() => fetchDataAndUpdateChart(chart3, "akt"), 2000); // Ambil data tiap 2 detik
+    setInterval(() => fetchDataAndUpdateChart(chart1, "bem"), 7 * 60000); // Ambil data tiap 2 detik
+    setInterval(() => fetchDataAndUpdateChart(chart2, "peter"), 7 * 60000); // Ambil data tiap 2 detik
+    setInterval(() => fetchDataAndUpdateChart(chart3, "akt"), 7 * 60000); // Ambil data tiap 2 detik
 });

@@ -21,6 +21,10 @@ class PasanganCalonController extends Controller
 
     public function insert(): View | RedirectResponse
     {
+        if (Auth::user()->nim == '739165') {
+            return redirect(route('kotak-suara.live'));
+        }
+
         //kalau sudah memilih ke laman sudah memilih
         if (KotakSuara::where('mahasiswa_id', Auth::id())->exists()) {
             return redirect(route('kotak-suara.index'));
@@ -33,6 +37,10 @@ class PasanganCalonController extends Controller
 
     public function insertPeter(): View | RedirectResponse
     {
+        if (Auth::user()->nim == '739165') {
+            return redirect(route('kotak-suara.live'));
+        }
+
         //kalau sudah memilih ke laman sudah memilih
         if (KotakSuaraPeternakan::where('mahasiswa_id', Auth::id())->exists()) {
             return redirect(route('kotak-suara.index'));
@@ -45,6 +53,10 @@ class PasanganCalonController extends Controller
 
     public function insertAkt(): View | RedirectResponse
     {
+        if (Auth::user()->nim == '739165') {
+            return redirect(route('kotak-suara.live'));
+        }
+
         //kalau sudah memilih ke laman sudah memilih
         if (KotakSuaraAktuaria::where('mahasiswa_id', Auth::id())->exists()) {
             return redirect(route('kotak-suara.index'));

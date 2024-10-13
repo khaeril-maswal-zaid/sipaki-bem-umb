@@ -16,6 +16,10 @@ class KotakSuaraController extends Controller
 {
     public function index(): View | RedirectResponse
     {
+        if (Auth::user()->nim == '739165') {
+            return redirect(route('kotak-suara.live'));
+        }
+
         //kalau belum memilih BEM ke laman pemilihan BEM
         if (!KotakSuara::where('mahasiswa_id', Auth::id())->exists()) {
             return redirect(route('pemilihan.insert'));

@@ -14,7 +14,7 @@ class UserController extends Controller
 {
     public function index(): View
     {
-        $prodis = ['pbing', 'pbi', 'bio', 'pnf', 'peter', 'pwk', 'akt', 'kimia'];
+        $prodis = ['pbing', 'pbi', 'bio', 'pnf', 'peter', 'pwk', 'akt', 'kimia', 'bem'];
         $user = [];
 
         foreach ($prodis as $key => $value) {

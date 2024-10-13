@@ -222,9 +222,9 @@
             fetchDataAndUpdateChart("peter", "cards2");
             fetchDataAndUpdateChart("akt", "cards3");
 
-            setInterval(() => fetchDataAndUpdateChart("bem", "cards1"), 2000);
-            setInterval(() => fetchDataAndUpdateChart("peter", "cards2"), 2000);
-            setInterval(() => fetchDataAndUpdateChart("akt", "cards3"), 2000);
+            setInterval(() => fetchDataAndUpdateChart("bem", "cards1"), 7 * 60000);
+            setInterval(() => fetchDataAndUpdateChart("peter", "cards2"), 7 * 60000);
+            setInterval(() => fetchDataAndUpdateChart("akt", "cards3"), 7 * 60000);
         });
     </script>
 </x-app-layout>
